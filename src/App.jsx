@@ -1,6 +1,6 @@
 import './App.css'
 import {getData} from "./constants/db"
-import Card from './constants/card/card';
+import Card from './components/card/card';
 
 const courses = getData()
 

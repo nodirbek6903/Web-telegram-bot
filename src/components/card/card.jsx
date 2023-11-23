@@ -1,3 +1,4 @@
+import Button from "../button/button"
 import "./card.css"
 const Card = (props) => {
     const {course} = props
@@ -22,8 +23,8 @@ const Card = (props) => {
         <div className="hr"></div>
 
         <div className="btn__container">
-            <button>+</button>
-            <button>-</button>
+            <Button title={"+"} type={"add"} />
+            <Button title={"-"} type={"remove"} />
         </div>
     </div>
   )
