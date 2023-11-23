@@ -26,7 +26,7 @@ const App = () => {
     const existItem = cartItems.find(c => c.id == item.id)
 
     if(existItem.quantity ===1){
-      const newData = cartItems.filter(c => c.id !=== existItem.id)
+      const newData = cartItems.filter(c => c.id !== existItem.id)
       setCartItems(newData)
     }else{
       const newData = cartItems.map(c => c.id === existItem.id ? {...existItem,quantity: existItem.quantity - 1} : c)
@@ -36,7 +36,7 @@ const App = () => {
   return (
     <>
       <h1 className='heading'>Nodirbek Kurslari</h1>
-      <Cart />
+      <Cart cartItems={cartItems} />
       <div className="cards__container">
         {courses.map(course => (
           <>
