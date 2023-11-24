@@ -3,7 +3,7 @@ import Button from "../button/button";
 import "./cart.css";
 
 const Cart = (props) => {
-  const { cartItems } = props;
+  const { cartItems,onCheckout, } = props;
   return (
     <div className="cart__container">
       <p>
@@ -18,6 +18,7 @@ const Cart = (props) => {
         title={`${cartItems.length === 0 ? "Buyurtma berish" : "To'lov"}`}
         disable={cartItems.length === 0 ? true : false}
         type={"checkout"}
+        onClick = {onCheckout}
       />
     </div>
   );

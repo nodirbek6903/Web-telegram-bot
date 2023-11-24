@@ -2,12 +2,18 @@ import './App.css'
 import {getData} from "./constants/db"
 import Card from './components/card/card';
 import Cart from './components/cart/cart';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const courses = getData()
 
+const telegram = window.Telegram.WebApp;
+
 const App = () => {
   const [cartItems,setCartItems] = useState([])
+  
+  useEffect(() => {
+    telegram.ready();
+  })
 
   const onAddItem = (item) => {
     const existItem = cartItems.find(c => c.id == item.id)
@@ -33,14 +39,31 @@ const App = () => {
       setCartItems(newData)
     }
   }
+
+  const onCheckout = () => {
+    telegram.MainButton.text = "Sotib Olish :)";
+    telegram.MainButton.show();
+  }
+
+  const onSendData = useCallback(() => {
+    telegram.sendData(JSON.stringify(cartItems))
+  },[cartItems])
+
+
+  useEffect(() => {
+    telegram.onEvent("mainButtonClicked",onSendData)
+
+    return () => telegram.offEvent("mainButtonClicked",onSendData)
+  },[onSendData])
+
   return (
     <>
       <h1 className='heading'>Nodirbek Kurslari</h1>
-      <Cart cartItems={cartItems} />
+      <Cart cartItems={cartItems} onCheckout={onCheckout} />
       <div className="cards__container">
         {courses.map(course => (
           <>
-            <Card key={course.id} course={course} onAddItem={onAddItem} onRemoveItem={onRemoveItem} />
+            <Card key={course.id} course={course} onAddItem={onAddItem} onCheckout={onCheckout} onRemoveItem={onRemoveItem} />
           </>
         ))}
       </div>
